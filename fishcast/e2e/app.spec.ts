@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test';
 test.beforeEach(async ({ page }) => {
   // 浏览器失败分支稳定使用断网模拟；不把测试响应当真实天气。
   await page.route('https://api.open-meteo.com/**', (route) => route.abort());
+  await page.route('https://webapi.amap.com/**', (route) => route.abort());
+  await page.route('https://restapi.amap.com/**', (route) => route.abort());
 });
 test('API 失败可读、真实库为空、重试可操作', async ({ page }) => {
   await page.goto('/');
@@ -18,7 +20,7 @@ test('示例隔离、状态筛选、详情及退出', async ({ page }) => {
   await expect(page.locator('.demo-banner')).toContainText('DEMO');
   await expect(page.locator('.spot-card')).toHaveCount(2);
   await page.locator('.site-header').getByRole('link', { name: '地图找点' }).click();
-  await expect(page.getByRole('heading', { name: '地图服务尚未启用' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '重庆地图' })).toBeVisible();
   await page.getByRole('button', { name: '查看候选列表' }).click();
   await expect(page).toHaveURL(/#\/map$/);
   await page.getByRole('combobox').selectOption('PROHIBITED');

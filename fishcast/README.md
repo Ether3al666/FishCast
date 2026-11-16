@@ -14,7 +14,7 @@ npm run dev
 
 打开终端显示的本地地址。无需 `.env`、账号或 Key 即可运行。首次加载天气会请求 `https://api.open-meteo.com`；失败时显示错误与重试，不注入示例天气。
 
-当前电脑的 Codex 精简运行时没有全局 npm，已用临时 npm 完成安装并生成 `package-lock.json`。现有依赖已就绪，可在 PowerShell 直接执行 `./start-dev.ps1` 启动；脚本只监听本地，不部署。换一台电脑请按上面的标准 npm 流程安装。
+当前电脑的 Codex 精简运行时没有全局 npm，已用临时 npm 完成安装并生成 `package-lock.json`。现有依赖已就绪，Windows 下双击 `start-dev.cmd` 即可启动。它只为本次启动设置 PowerShell 进程级执行策略，不修改全局策略。也可在终端执行 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start-dev.ps1`。脚本只监听本地，不部署。换一台电脑请按上面的标准 npm 流程安装。
 
 ```sh
 npm run lint

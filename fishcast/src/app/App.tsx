@@ -28,6 +28,7 @@ import { PageTitle } from '../components/common/PageTitle';
 import { EmptySpots } from '../components/common/EmptySpots';
 import { PlanForm } from '../components/plan/PlanForm';
 import { SpotDetail } from '../pages/SpotDetail';
+import { MapPage } from '../pages/MapPage';
 
 // 城市级天气参考中心，非钓点坐标、非用户定位。来源见 DATA_SOURCES。
 const cityLocation: GeoLocation = { lat: 29.56, lon: 106.55, crs: 'WGS84' };
@@ -45,7 +46,6 @@ export default function App() {
   const [locating, setLocating] = useState(false);
   const [locationMessage, setLocationMessage] = useState('');
   const [day, setDay] = useState(0);
-  const [legalFilter, setLegalFilter] = useState('all');
   const weather = useWeather(location, demo);
   const spots = demo ? demoSpots : realSpots;
   const route = useLocation();
@@ -312,71 +312,14 @@ export default function App() {
           <Route
             path="/map"
             element={
-              <>
-                <PageTitle
-                  eyebrow="WATERSIDE EXPLORER"
-                  title="找一片值得出发的水域"
-                  text="先查证据，再看距离。地图尚未启用，可继续使用候选列表。"
-                />
-                <div className="map-layout">
-                  <section className="map-placeholder panel">
-                    <Scenery compact />
-                    <div className="map-fallback">
-                      <Map size={30} />
-                      <h2>地图服务尚未启用</h2>
-                      <p>
-                        尚未配置并审核高德 Key 与安全方案。
-                        <br />
-                        此背景为山水插画，不是地理地图。
-                      </p>
-                      <button
-                        onClick={() =>
-                          document
-                            .getElementById('candidate-list')
-                            ?.scrollIntoView({ behavior: 'smooth' })
-                        }
-                        className="button primary"
-                      >
-                        查看候选列表 <ArrowRight size={15} />
-                      </button>
-                    </div>
-                  </section>
-                  <section className="panel candidate-list" id="candidate-list">
-                    <div className="section-heading">
-                      <h2>候选水域</h2>
-                      <span className="badge muted">{spots.length} 条记录</span>
-                    </div>
-                    <label className="field">
-                      按许可状态查看
-                      <select value={legalFilter} onChange={(e) => setLegalFilter(e.target.value)}>
-                        <option value="all">全部状态</option>
-                        <option value="UNKNOWN">待核实</option>
-                        <option value="PROHIBITED">禁止垂钓</option>
-                        <option value="VERIFIED_OPEN">已核实开放</option>
-                      </select>
-                    </label>
-                    {spots.length ? (
-                      <div className="filtered-list">
-                        {spots
-                          .filter((s) => legalFilter === 'all' || s.legalStatus === legalFilter)
-                          .map((s) => (
-                            <div key={s.id} data-legal={s.legalStatus}>
-                              <SpotCard spot={s} />
-                            </div>
-                          ))}
-                        <p className="filter-empty">没有符合筛选条件的记录。</p>
-                      </div>
-                    ) : (
-                      <EmptySpots
-                        onDemo={() => {
-                          setDemo(true);
-                          clearPlan();
-                        }}
-                      />
-                    )}
-                  </section>
-                </div>
-              </>
+              <MapPage
+                spots={spots}
+                demo={demo}
+                onDemo={() => {
+                  setDemo(true);
+                  clearPlan();
+                }}
+              />
             }
           />
           <Route path="/spots/:id" element={<SpotDetail spots={spots} />} />
@@ -512,6 +455,12 @@ export default function App() {
                       <dt>真实钓点</dt>
                       <dd>
                         {realSpots.length} 条。尚未完成 5–10 个候选场所的来源、坐标与许可核查。
+                      </dd>
+                      <dt>地图服务</dt>
+                      <dd>
+                        高德 JS API
+                        2.0，只在地图页点击加载后请求基础地图。坐标转换在本地完成，未接入 POI
+                        搜索、路线或地理编码。账户可用额度以高德控制台为准；示例标记不是现实钓点。
                       </dd>
                       <dt>许可与法规</dt>
                       <dd>

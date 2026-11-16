@@ -16,7 +16,9 @@
     "probe:weather": "node scripts/probe-weather.mjs"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@tailwindcss/vite": "^4.1.0",
+    "gcoord": "^1.0.8",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
