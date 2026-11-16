@@ -1,0 +1,12 @@
+npm notice run fishcast-chongqing@0.1.0 test
+npm notice run vitest run
+
+ RUN  v3.2.7 C:/Users/24305/Documents/ChatGPT/Qoder 高校创造力大赛/fishcast
+
+ ✓ tests/weatherProvider.test.ts (6 tests) 12ms
+ ✓ tests/safetyGate.test.ts (15 tests) 6ms
+
+ Test Files  2 passed (2)
+      Tests  21 passed (21)
+   Start at  20:58:39
+   Duration  1.18s (transform 122ms, setup 0ms, collect 269ms, tests 18ms, environment 0ms, prepare 297ms)
