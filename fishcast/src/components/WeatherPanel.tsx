@@ -55,8 +55,9 @@ export function WeatherPanel({
     <section className="panel weather-panel" aria-labelledby="weather-title" aria-busy={loading}>
       <div className="section-heading">
         <div>
-          <span className="eyebrow">WEATHER WINDOW</span>
-          <h2 id="weather-title">先看天气，再做决定</h2>
+          <h2 id="weather-title" tabIndex={-1}>
+            先看天气，再做决定
+          </h2>
         </div>
         <div className="segmented">
           <button className={day === 0 ? 'selected' : ''} onClick={() => setDay(0)}>
@@ -166,8 +167,8 @@ function ForecastChart({ hours, loading }: { hours: HourlyWeather[]; loading: bo
       <svg viewBox="0 0 600 144" role="img" aria-label="逐小时温度与降水趋势">
         {[30, 60, 90].map((v) => (
           <g key={v}>
-            <path d={`M35 ${v}H590`} stroke="#e6e8de" strokeDasharray="3 5" />
-            <text x="0" y={v + 3} fontSize="10" fill="#7b8378">
+            <path d={`M35 ${v}H590`} stroke="#475253" strokeDasharray="3 5" />
+            <text x="0" y={v + 3} fontSize="10" fill="#b3c2c1">
               {Math.round(min + ((87 - v) / 65) * (max - min))}°
             </text>
           </g>
@@ -180,11 +181,11 @@ function ForecastChart({ hours, loading }: { hours: HourlyWeather[]; loading: bo
                   <path
                     d={`M${points[i - 1]}L${point}`}
                     fill="none"
-                    stroke="#497b58"
+                    stroke="#88ccc6"
                     strokeWidth="2.3"
                   />
                 )}
-                <circle cx={point.split(',')[0]} cy={point.split(',')[1]} r="3" fill="#497b58" />
+                <circle cx={point.split(',')[0]} cy={point.split(',')[1]} r="3" fill="#88ccc6" />
               </g>
             ),
         )}
@@ -202,7 +203,7 @@ function ForecastChart({ hours, loading }: { hours: HourlyWeather[]; loading: bo
               x={30 + (i * 530) / Math.max(1, selected.length - 1)}
               y="135"
               textAnchor="middle"
-              fill="#7b8378"
+              fill="#b3c2c1"
               fontSize="11"
             >
               {new Date(h.time).toLocaleTimeString('zh-CN', {

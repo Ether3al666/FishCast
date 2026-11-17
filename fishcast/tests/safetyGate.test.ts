@@ -55,7 +55,16 @@ describe('合规与安全硬闸门', () => {
     expect(run({ ...spot, legalStatus }).eligible).toBe(false),
   );
   it('demo 永不进入正式推荐', () => demoSpots.forEach((s) => expect(run(s).eligible).toBe(false)));
-  it('真实种子为空且无 demo', () => expect(realSpots).toEqual([]));
+  it('真实候选有来源且不会因收录而获得开放许可', () => {
+    expect(realSpots.length).toBeGreaterThan(0);
+    realSpots.forEach((s) => {
+      expect(s.isDemo).toBe(false);
+      expect(s.evidence.length).toBeGreaterThan(0);
+      expect(s.legalStatus).toBe('UNKNOWN');
+      expect(s.verifiedAt).toBeUndefined();
+      expect(run(s).eligible).toBe(false);
+    });
+  });
   it('没有来源或证据过期不可推荐', () => {
     expect(run({ ...spot, evidence: [] }).eligible).toBe(false);
     expect(run({ ...spot, verifiedAt: '2026-10-01T00:00:00Z' }).eligible).toBe(false);

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { MAIN_CITY_DISTRICTS, type SearchArea } from '../config/regions';
 
 export const locationSchema = z.object({
   lat: z.number().finite().min(-90).max(90),
@@ -9,14 +10,43 @@ export const spotSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   district: z.string(),
+  traditionalDistrict: z.enum(MAIN_CITY_DISTRICTS).optional(),
+  districtEvidence: z
+    .object({
+      source: z.string(),
+      url: z.string().url(),
+      retrievedAt: z.string().datetime(),
+      township: z.string().optional(),
+      scope: z.string(),
+    })
+    .optional(),
+  address: z.string().optional(),
   location: locationSchema.nullable(),
+  locationNote: z.string().optional(),
+  locationEvidence: z
+    .object({
+      source: z.string(),
+      url: z.string().url(),
+      retrievedAt: z.string().datetime(),
+      poiId: z.string(),
+      poiName: z.string(),
+      original: z.object({ lon: z.number(), lat: z.number(), crs: z.literal('GCJ02') }),
+    })
+    .optional(),
   waterType: z.enum(['POND', 'RESERVOIR', 'LAKE', 'RIVER', 'OTHER']),
   fishSpecies: z.array(z.string()),
   methods: z.array(z.enum(['TAIDIAO', 'LUYA', 'OTHER'])),
+  methodHints: z.array(z.enum(['TAIDIAO', 'LUYA', 'OTHER'])).optional(),
   legalStatus: z.enum(['VERIFIED_OPEN', 'CONDITIONAL', 'PROHIBITED', 'UNKNOWN']),
   legalConditions: z.array(z.string()).default([]),
   evidence: z.array(
-    z.object({ url: z.string().url(), title: z.string(), retrievedAt: z.string().datetime() }),
+    z.object({
+      url: z.string().url(),
+      title: z.string(),
+      retrievedAt: z.string().datetime(),
+      publishedAt: z.string().optional(),
+      scope: z.string().optional(),
+    }),
   ),
   verifiedAt: z.string().datetime().optional(),
   appliesClosedSeason: z.boolean().default(false),
@@ -60,6 +90,7 @@ export type PlanRequest = {
   startAt: string;
   endAt: string;
   radiusKm: number;
+  searchArea?: SearchArea;
 };
 export type Recommendation = {
   spotId: string;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import type { GeoLocation, PlanRequest, FishingMethod } from '../../domain/models';
+import { MAIN_CITY_DISTRICTS, OUTER_DISTRICTS, type SearchArea } from '../../config/regions';
 export function PlanForm({
   location,
   onSubmit,
@@ -21,6 +22,7 @@ export function PlanForm({
     [method, setMethod] = useState<FishingMethod>('TAIDIAO'),
     [radius, setRadius] = useState(30),
     [error, setError] = useState('');
+  const [searchArea, setSearchArea] = useState<SearchArea | undefined>();
   return (
     <form
       onChange={onChange}
@@ -37,13 +39,17 @@ export function PlanForm({
           return;
         }
         setError('');
-        onSubmit({ location, targetSpecies: species, method, radiusKm: radius, startAt, endAt });
+        onSubmit({
+          location,
+          targetSpecies: species,
+          method,
+          radiusKm: radius,
+          searchArea,
+          startAt,
+          endAt,
+        });
       }}
     >
-      <label className="field">
-        天气参考位置
-        <input readOnly value={`${location.lat.toFixed(4)}, ${location.lon.toFixed(4)} · WGS84`} />
-      </label>
       <div className="form-row">
         <label className="field">
           目标鱼种
@@ -86,17 +92,43 @@ export function PlanForm({
           <input type="time" value={end} onChange={(e) => setEnd(e.target.value)} required />
         </label>
       </div>
-      <label className="field range-label">
-        搜索半径 <b>{radius} km</b>
-        <input
-          type="range"
-          min="5"
-          max="100"
-          step="5"
-          value={radius}
-          onChange={(e) => setRadius(Number(e.target.value))}
-        />
+      <label className="field">
+        查找区域
+        <select
+          value={searchArea ?? ''}
+          onChange={(e) => setSearchArea((e.target.value || undefined) as SearchArea | undefined)}
+        >
+          <option value="">按公里半径</option>
+          <option value="CHONGQING">全重庆 · 不限半径</option>
+          <option value="MAIN_CITY">主城九区 · 不限半径</option>
+          <optgroup label="主城九区（传统口径）">
+            {MAIN_CITY_DISTRICTS.map((d) => (
+              <option key={d}>{d}</option>
+            ))}
+          </optgroup>
+          <optgroup label="现行新区">
+            <option>两江新区</option>
+          </optgroup>
+          <optgroup label="其他区县">
+            {OUTER_DISTRICTS.map((d) => (
+              <option key={d}>{d}</option>
+            ))}
+          </optgroup>
+        </select>
       </label>
+      {!searchArea && (
+        <label className="field range-label">
+          搜索半径 <b>{radius} km</b>
+          <input
+            type="range"
+            min="5"
+            max="100"
+            step="5"
+            value={radius}
+            onChange={(e) => setRadius(Number(e.target.value))}
+          />
+        </label>
+      )}
       {error && (
         <p className="form-error" role="alert">
           {error}

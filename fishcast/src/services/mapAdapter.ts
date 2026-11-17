@@ -43,9 +43,9 @@ export function buildMapPoints(spots: Spot[], demo: boolean): MapPoint[] {
 }
 export function mapStatusLabel(status: Spot['legalStatus']): string {
   return {
-    UNKNOWN: '待核实',
+    UNKNOWN: '资料收录',
     PROHIBITED: '禁止垂钓',
-    CONDITIONAL: '附条件，待核查',
+    CONDITIONAL: '附加条件',
     VERIFIED_OPEN: '许可记录已核实，仍需复核',
   }[status];
 }

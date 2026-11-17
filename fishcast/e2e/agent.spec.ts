@@ -1,0 +1,54 @@
+import { expect, test } from '@playwright/test';
+test.beforeEach(async ({ page }) => {
+  await page.route('https://api.open-meteo.com/**', (r) => r.abort());
+  await page.goto('/#/plan');
+  await expect(page.getByRole('button', { name: '刷新天气' })).toBeEnabled();
+});
+test('对话追问、补充、草稿、重新核查与新对话', async ({ page }) => {
+  const input = page.getByRole('textbox', { name: '告诉助手你的出钓想法' });
+  await expect(page.getByRole('button', { name: '发送消息' })).toBeDisabled();
+  await input.fill('钓鲫鱼');
+  await input.press('Enter');
+  await expect(page.getByRole('log')).toContainText('你打算哪天');
+  await input.fill('明天上午，20公里');
+  await input.press('Enter');
+  await expect(page.locator('.agent-draft')).toContainText('20 km');
+  await page.getByText('出发地天气', { exact: true }).click();
+  await expect(page.getByRole('log')).toContainText('天气暂不可用');
+  await expect(page.getByRole('log')).toContainText('范围内候选');
+  await input.fill('改成下午');
+  await page.getByRole('button', { name: '发送消息' }).click();
+  await expect(page.locator('.agent-draft')).toContainText('12:00–18:00');
+  await expect(page.locator('.agent-draft')).toContainText('鲫鱼');
+  await page.getByRole('button', { name: '重新核查草稿' }).click();
+  await expect(page.getByRole('log')).toContainText('已按当前天气和候选资料重新核查');
+  await page.getByRole('button', { name: '新对话', exact: true }).click();
+  await expect(page.locator('.agent-message')).toHaveCount(0);
+  await expect(input).toBeFocused();
+});
+test('不支持的描述不捏造结果；切换示例清空旧上下文', async ({ page }) => {
+  const input = page.getByRole('textbox', { name: '告诉助手你的出钓想法' });
+  await input.fill('下周一上午钓鲫鱼');
+  await input.press('Enter');
+  await expect(page.getByRole('log')).toContainText('暂不支持');
+  await expect(page.locator('.agent-report')).toHaveCount(0);
+  await page.locator('footer').getByRole('button', { name: '体验示例', exact: true }).click();
+  await expect(page.locator('.agent-message')).toHaveCount(0);
+  await page.getByRole('button', { name: '明天上午，台钓鲫鱼，30公里以内', exact: false }).click();
+  await expect(page.getByRole('log')).toContainText('DEMO / 示例场景');
+  await expect(page.getByRole('log')).toContainText('不进入真实候选');
+  await page.locator('.demo-banner button').click();
+  await expect(page.locator('.agent-message')).toHaveCount(0);
+});
+test('手机对话、中文输入法及多行输入', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  const input = page.getByRole('textbox', { name: '告诉助手你的出钓想法' });
+  await input.fill('明天上午');
+  await input.dispatchEvent('keydown', { key: 'Enter', isComposing: true });
+  await expect(page.locator('.agent-message')).toHaveCount(0);
+  await input.press('Shift+Enter');
+  await expect(input).toHaveValue(/\n/);
+  await page.getByRole('button', { name: '发送消息' }).click();
+  await expect(page.getByRole('log')).toContainText('范围内候选');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});

@@ -1,0 +1,972 @@
+/* Planner continuation of the coastal cover. All photography here is decorative UI. */
+.is-plan .agent-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 288px;
+  gap: 64px;
+  align-items: start;
+  margin: 48px 0 80px;
+}
+.is-plan .agent-workspace {
+  min-width: 0;
+  background: transparent;
+  border: 0;
+}
+.is-plan .agent-toolbar {
+  padding: 0;
+  margin-bottom: 22px;
+}
+.is-plan .agent-toolbar button {
+  min-height: 44px;
+  padding: 9px 0 9px 14px;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.is-plan .agent-toolbar button:hover {
+  color: var(--accent);
+}
+.is-plan .agent-conversation {
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+  padding: 0 0 34px;
+}
+.is-plan .agent-welcome {
+  padding: 0;
+  text-align: left;
+}
+.is-plan .agent-emblem {
+  width: 44px;
+  height: 40px;
+  margin: 0 0 22px;
+  border: 0;
+  border-radius: 0;
+  justify-items: start;
+}
+.is-plan .agent-welcome h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.3vw, 44px);
+  line-height: 1.5;
+  letter-spacing: 2px;
+  margin: 0 0 20px;
+}
+.is-plan .agent-welcome > p {
+  font-size: 13px;
+  line-height: 2;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin: 0;
+}
+.is-plan .agent-starters {
+  gap: 0;
+  max-width: none;
+  margin: 24px 0 0;
+  border-bottom: 1px solid var(--line);
+}
+.is-plan .agent-starters button {
+  min-height: 64px;
+  gap: 20px;
+  padding: 18px 2px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.9;
+  letter-spacing: 0.5px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+.is-plan .agent-starters button:hover {
+  background: #8dccc709;
+  color: var(--accent);
+}
+.is-plan .agent-starters button > span {
+  min-width: 23px;
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--accent);
+}
+.is-plan .agent-starters svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.is-plan .agent-composer {
+  margin: 0;
+  padding: 22px 22px 15px;
+  border: 0;
+  border-top: 1px solid #7aa39e;
+  border-bottom: 1px solid var(--line);
+  background: #222829;
+}
+.is-plan .agent-composer:focus-within {
+  border-top-color: var(--accent);
+}
+.is-plan .agent-composer textarea {
+  min-height: 80px;
+  max-height: 220px;
+  padding: 2px 0;
+  border-radius: 0;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--ink);
+}
+.is-plan .agent-composer textarea::placeholder {
+  color: #aebfbc;
+}
+.is-plan .agent-composer > div {
+  justify-content: flex-end;
+  margin-top: 12px;
+  gap: 12px;
+}
+.is-plan .agent-composer > div > span {
+  color: #b2bfbd;
+  font-size: 10px;
+  line-height: 1.8;
+}
+.is-plan .agent-composer button {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #193435;
+}
+.is-plan .agent-composer button:not(:disabled):hover {
+  background: #b9e1db;
+  color: #193435;
+}
+.is-plan .agent-history {
+  margin: 0 0 32px;
+  padding: 0 0 16px;
+  border-color: var(--line);
+  color: var(--muted);
+}
+.is-plan .agent-history > summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+}
+.is-plan .agent-history-message {
+  margin: 24px 0 30px;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #dce4df;
+}
+.is-plan .agent-history-message > b {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.is-plan .agent-message {
+  margin-bottom: 36px;
+}
+.is-plan .agent-message.user,
+.is-plan .agent-history-message.user {
+  width: fit-content;
+  max-width: 84%;
+  margin-left: auto;
+  margin-right: 0;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 18px;
+  background: #3a5452;
+  color: #edf4ef;
+  overflow-wrap: anywhere;
+}
+.is-plan .agent-message.assistant,
+.is-plan .agent-history-message.assistant {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.is-plan .agent-speaker {
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.is-plan .agent-message.user .agent-speaker {
+  justify-content: flex-end;
+  margin-bottom: 7px;
+  color: #b8d1ca;
+}
+.is-plan .agent-history-message.user > b {
+  margin-bottom: 7px;
+  text-align: right;
+  color: #b8d1ca;
+}
+.is-plan .agent-message > p {
+  font-size: 14px;
+  line-height: 2;
+  color: #dce4df;
+}
+.is-plan .agent-message.user > p {
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.85;
+  letter-spacing: 0;
+  color: #edf4ef;
+}
+.is-plan .agent-report {
+  margin-top: 30px;
+}
+.is-plan .agent-sidebar {
+  min-width: 0;
+  gap: 30px;
+}
+.is-plan .agent-draft {
+  padding: 0;
+  background: transparent;
+}
+.is-plan .agent-draft::before {
+  content: '';
+  display: block;
+  height: 164px;
+  margin-bottom: 30px;
+  background:
+    linear-gradient(180deg, #18373a08, #18373a38),
+    url('/images/water.jpg') center / cover;
+}
+.is-plan .agent-draft h2 {
+  margin: 0;
+  font-size: 29px;
+  line-height: 1.5;
+  letter-spacing: 2px;
+}
+.is-plan .agent-draft dl {
+  margin: 28px 0 22px;
+}
+.is-plan .agent-draft dt {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-color: var(--line);
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+.is-plan .agent-draft dd {
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.is-plan .agent-draft dd svg {
+  color: var(--accent);
+}
+.is-plan .agent-draft-note {
+  display: block;
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.is-plan .agent-recheck {
+  min-height: 46px;
+  padding: 12px 0;
+  margin-top: 24px;
+  border: 0;
+  border-top: 1px solid #709c97;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: 0.7px;
+  color: var(--accent);
+}
+.is-plan .agent-data {
+  gap: 13px;
+  padding: 0;
+}
+.is-plan .agent-data > div {
+  min-width: 0;
+  flex: 1;
+}
+.is-plan .agent-data strong {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.is-plan .agent-data p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.is-plan .agent-data button {
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 11px;
+  text-underline-offset: 5px;
+}
+.is-plan .agent-settings {
+  padding: 15px 0;
+  border-color: var(--line);
+}
+.is-plan .agent-settings > summary {
+  min-height: 44px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+.is-plan .agent-settings > form {
+  margin-top: 24px;
+}
+.is-plan .weather-answer-details {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+.is-plan .weather-answer-details summary {
+  min-height: 44px;
+  align-content: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+.is-plan .agent-settings > p {
+  margin: 20px 0 25px;
+  font-size: 11px;
+  line-height: 1.9;
+}
+.is-plan .agent-settings .form-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.is-plan .agent-settings .field,
+.is-plan .weather-answer > .field {
+  min-width: 0;
+  gap: 11px;
+  margin-bottom: 22px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #c2ceca;
+}
+.is-plan .agent-settings input:not([type='range']),
+.is-plan .agent-settings select,
+.is-plan .weather-answer > .field select {
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 9px;
+  border: 0;
+  border-bottom: 1px solid #647473;
+  border-radius: 0;
+  background: #222829;
+  color: var(--ink);
+  font-size: 12px;
+}
+.is-plan .agent-settings input[readonly] {
+  background: transparent;
+  color: #b9c8c4;
+  font-size: 11px;
+}
+.is-plan .agent-settings select option,
+.is-plan .weather-answer select option {
+  background: #262b2c;
+  color: var(--ink);
+}
+.is-plan .agent-settings input[type='range'] {
+  min-height: 40px;
+  accent-color: var(--accent);
+}
+.is-plan .agent-settings .submit {
+  min-height: 48px;
+  padding: 12px 15px;
+  border-radius: 0;
+  background: var(--accent);
+  color: #193435;
+  font-size: 12px;
+}
+.is-plan .agent-source {
+  min-height: 44px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+/* Results stay in the reading column; source photographs retain their captions. */
+.is-plan .trip-summary,
+.is-plan .trip-summary-compact {
+  padding: 0 0 24px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+.is-plan .trip-summary h3 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.is-plan .trip-summary p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.is-plan .trip-summary .trip-stats {
+  flex-wrap: wrap;
+  gap: 18px 30px;
+  margin-top: 23px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.is-plan .trip-summary .trip-stats b {
+  display: inline;
+  margin-right: 8px;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+}
+.is-plan .trip-section-heading {
+  margin: 34px 0 12px;
+}
+.is-plan .trip-section-heading h3 {
+  font-size: 29px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+.is-plan .trip-selection-notes {
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+.is-plan .trip-photo-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.is-plan .trip-photo-card {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+.is-plan .trip-photo-card.selected {
+  background: transparent;
+  border-bottom-color: var(--accent);
+  box-shadow: none;
+}
+.is-plan .trip-photo {
+  height: 190px;
+  background: #203b3c;
+  overflow: hidden;
+}
+.is-plan .trip-photo img {
+  transition: transform 220ms ease;
+}
+.is-plan .trip-photo-card:hover .trip-photo img {
+  transform: scale(1.025);
+}
+.is-plan .trip-photo-status {
+  background: #1c3233eb;
+  color: #e5eee9;
+  letter-spacing: 0.2px;
+}
+.is-plan .trip-photo-body {
+  min-width: 0;
+  padding: 17px 0 20px;
+}
+.is-plan .trip-photo-card h4 {
+  display: block;
+  min-height: 0;
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  -webkit-line-clamp: unset;
+}
+.is-plan .trip-card-location {
+  gap: 7px;
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.is-plan .trip-card-location .trip-distance {
+  color: #b9ceca;
+}
+.is-plan .trip-photo-card .trip-actions {
+  margin-top: 15px;
+}
+.is-plan .trip-photo-card .trip-actions button {
+  min-height: 44px;
+  padding: 9px 0;
+  border: 0;
+  border-top: 1px solid #587c77;
+  background: transparent;
+  color: var(--accent);
+  font-size: 11px;
+  line-height: 1.7;
+  text-align: left;
+}
+.is-plan .trip-photo-card .trip-actions button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: #c4e4df;
+}
+.is-plan .trip-photo-card .trip-actions svg {
+  flex-shrink: 0;
+}
+.is-plan .trip-card-details {
+  margin-top: 9px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.is-plan .trip-card-details summary {
+  min-height: 36px;
+  align-content: center;
+}
+.is-plan .trip-more {
+  gap: 8px 22px;
+  margin: 26px 0;
+}
+.is-plan .trip-more button,
+.is-plan .trip-more > a {
+  min-height: 44px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid #637f7b;
+  background: transparent;
+  color: var(--accent);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.is-plan .trip-local-weather {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-color: var(--line);
+}
+.is-plan .trip-local-weather h3 {
+  align-items: flex-start;
+  margin: 0 0 24px;
+  font-size: 26px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.is-plan .trip-local-weather h3 > svg {
+  flex-shrink: 0;
+  margin-top: 10px;
+  color: var(--accent);
+}
+.is-plan .trip-windows {
+  gap: 24px;
+}
+.is-plan .trip-windows > div {
+  padding: 22px 0 25px;
+  border: 0;
+  border-top: 1px solid #647f7b;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+}
+.is-plan .trip-windows strong {
+  font-family: var(--serif);
+  font-size: 30px;
+  color: var(--ink);
+}
+.is-plan .trip-window-metrics small,
+.is-plan .trip-window-heading span {
+  color: var(--muted);
+}
+.is-plan .trip-window-metrics b {
+  font-size: 12px;
+  color: var(--ink);
+}
+.is-plan .trip-local-weather .trip-weather-notice {
+  padding: 12px 0 12px 14px;
+  border-left: 1px solid #c5ba92;
+  background: transparent;
+  line-height: 1.9;
+}
+.is-plan .trip-local-weather > button,
+.is-plan .trip-reference > summary,
+.is-plan .trip-evidence > summary {
+  min-height: 44px;
+  align-content: center;
+}
+.is-plan .trip-reference {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+/* Weather reads like a compact forecast column, not a stack of filled panels. */
+.is-plan .weather-answer-heading > span {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+}
+.is-plan .weather-answer-heading h3,
+.is-plan .weather-answer > h3 {
+  margin: 13px 0 12px;
+  font-family: var(--serif);
+  font-size: clamp(25px, 3vw, 36px);
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 1px;
+  overflow-wrap: anywhere;
+}
+.is-plan .weather-answer-heading p,
+.is-plan .weather-answer > p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.is-plan .weather-answer .weather-answer-summary {
+  margin: 27px 0 26px;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--ink);
+}
+.is-plan .weather-answer-metrics {
+  gap: 24px;
+  margin-top: 8px;
+}
+.is-plan .weather-answer-metrics > div {
+  padding: 20px 0 22px;
+  border: 0;
+  border-top: 1px solid #698580;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+}
+.is-plan .weather-answer-metrics svg {
+  margin-right: 7px;
+  color: var(--accent);
+}
+.is-plan .weather-answer-metric-label {
+  color: #c3d0cc;
+  font-size: 11px;
+}
+.is-plan .weather-answer-metrics p {
+  gap: 6px;
+  margin-top: 16px;
+}
+.is-plan .weather-answer-metrics strong {
+  font-family: var(--serif);
+  font-size: clamp(21px, 2.5vw, 32px);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.is-plan .weather-answer-metrics p > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.is-plan .weather-answer .weather-answer-coverage,
+.is-plan .weather-answer .weather-answer-source {
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.9;
+}
+.is-plan .weather-answer-hourly {
+  margin-top: 28px;
+}
+.is-plan .weather-answer-hourly-heading {
+  padding-bottom: 10px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.is-plan .weather-answer .weather-answer-hourly li {
+  padding: 12px 0;
+  border-color: #465051b3;
+  font-size: 12px;
+  color: #dce5df;
+}
+.is-plan .weather-answer-hourly details > summary {
+  min-height: 44px;
+  align-content: center;
+  color: var(--accent);
+}
+.is-plan .weather-answer-comparison {
+  margin-top: 30px;
+  padding-top: 23px;
+  border-color: var(--line);
+}
+.is-plan .weather-answer-comparison h4 {
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+.is-plan .weather-answer-comparison > p {
+  line-height: 1.9;
+  color: var(--muted);
+}
+.is-plan .weather-answer-comparison li {
+  padding: 7px 0;
+}
+.is-plan .weather-answer-comparison strong {
+  font-size: 13px;
+  color: var(--ink);
+}
+.is-plan .weather-answer-comparison li > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.is-plan .weather-answer-actions {
+  gap: 8px 24px;
+  margin-top: 28px;
+}
+.is-plan .weather-answer-actions button,
+.is-plan .weather-answer > .text-button {
+  min-height: 44px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid #63847f;
+  background: transparent;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.3px;
+}
+.is-plan .weather-answer-actions button:hover {
+  background: transparent;
+  border-color: var(--accent);
+  color: #c4e4df;
+}
+.is-plan .agent-layout :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.is-plan .agent-layout :is(button, a, summary) {
+  -webkit-tap-highlight-color: #8dccc733;
+}
+
+@container (max-width: 560px) {
+  .is-plan .trip-photo-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .is-plan .trip-photo-card {
+    display: grid;
+    grid-template-columns: 36% minmax(0, 1fr);
+    gap: 20px;
+    padding-bottom: 22px;
+  }
+  .is-plan .trip-photo {
+    height: 100%;
+    min-height: 190px;
+  }
+  .is-plan .trip-photo-body {
+    padding: 0;
+  }
+  .is-plan .trip-photo-card h4 {
+    font-size: 19px;
+  }
+  .is-plan .trip-windows {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+@media (max-width: 1000px) {
+  .is-plan .agent-layout {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 38px;
+    margin-top: 50px;
+  }
+  .is-plan .agent-draft::before {
+    height: 150px;
+  }
+  .is-plan .weather-answer-metrics {
+    gap: 15px;
+  }
+  .is-plan .weather-answer-metrics strong {
+    font-size: 22px;
+  }
+}
+@media (max-width: 800px) {
+  .is-plan .agent-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    margin: 38px 0 70px;
+  }
+  .is-plan .agent-workspace,
+  .is-plan .agent-sidebar {
+    width: 100%;
+  }
+  .is-plan .agent-sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 28px 38px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .is-plan .agent-draft {
+    grid-row: span 3;
+  }
+  .is-plan .agent-draft::before {
+    height: 180px;
+  }
+  .is-plan .agent-settings {
+    padding-top: 0;
+  }
+  .is-plan .weather-answer-metrics strong {
+    font-size: 28px;
+  }
+}
+@media (max-width: 540px) {
+  .is-plan .agent-layout {
+    gap: 42px;
+    margin: 26px 0 50px;
+  }
+  .is-plan .agent-toolbar {
+    margin-bottom: 18px;
+  }
+  .is-plan .agent-welcome h2 {
+    font-size: 29px;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .is-plan .agent-welcome > p {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .is-plan .agent-emblem {
+    margin-bottom: 15px;
+  }
+  .is-plan .agent-starters {
+    margin-top: 28px;
+  }
+  .is-plan .agent-starters button {
+    min-height: 60px;
+    gap: 12px;
+    padding-block: 15px;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .is-plan .agent-conversation {
+    padding-bottom: 26px;
+  }
+  .is-plan .agent-composer {
+    padding: 17px 14px 13px;
+  }
+  .is-plan .agent-composer textarea {
+    min-height: 82px;
+    font-size: 16px;
+  }
+  .is-plan .agent-composer > div > span {
+    font-size: 9px;
+  }
+  .is-plan .agent-message.user,
+  .is-plan .agent-history-message.user {
+    max-width: 90%;
+    padding: 13px 15px;
+    border-radius: 16px;
+  }
+  .is-plan .agent-message {
+    margin-bottom: 30px;
+  }
+  .is-plan .agent-message.user > p {
+    font-size: 14px;
+  }
+  .is-plan .agent-message > p {
+    font-size: 13px;
+  }
+  .is-plan .agent-report {
+    margin-top: 25px;
+  }
+  .is-plan .agent-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 30px;
+  }
+  .is-plan .agent-sidebar > * {
+    width: 100%;
+    min-width: 0;
+  }
+  .is-plan .agent-draft::before {
+    height: 180px;
+    margin-bottom: 24px;
+  }
+  .is-plan .agent-draft h2 {
+    font-size: 27px;
+  }
+  .is-plan .agent-settings input:not([type='range']),
+  .is-plan .agent-settings select,
+  .is-plan .weather-answer > .field select {
+    font-size: 16px;
+  }
+  .is-plan .agent-settings input[readonly] {
+    font-size: 12px;
+  }
+  .is-plan .trip-summary h3 {
+    font-size: 21px;
+  }
+  .is-plan .trip-summary .trip-stats {
+    gap: 15px 22px;
+  }
+  .is-plan .trip-summary .trip-stats b {
+    font-size: 24px;
+  }
+  .is-plan .trip-section-heading h3 {
+    font-size: 26px;
+  }
+  .is-plan .trip-photo-card {
+    gap: 15px;
+  }
+  .is-plan .trip-photo-card h4 {
+    font-size: 17px;
+  }
+  .is-plan .trip-local-weather h3 {
+    font-size: 24px;
+  }
+  .is-plan .weather-answer-heading h3,
+  .is-plan .weather-answer > h3 {
+    font-size: 27px;
+  }
+  .is-plan .weather-answer .weather-answer-summary {
+    margin: 23px 0;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  .is-plan .weather-answer-metrics {
+    gap: 10px;
+  }
+  .is-plan .weather-answer-metrics > div {
+    padding: 17px 0 18px;
+  }
+  .is-plan .weather-answer-metrics svg {
+    display: block;
+    margin: 0 0 10px;
+  }
+  .is-plan .weather-answer-metrics p {
+    gap: 5px;
+    margin-top: 13px;
+  }
+  .is-plan .weather-answer-metrics strong {
+    font-size: 19px;
+  }
+  .is-plan .weather-answer-metric-label,
+  .is-plan .weather-answer-metrics p > span {
+    font-size: 10px;
+  }
+  .is-plan .weather-answer .weather-answer-hourly li {
+    font-size: 11px;
+  }
+  .is-plan .weather-answer-actions {
+    gap: 6px 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-plan .agent-starters button,
+  .is-plan .trip-photo img {
+    transition: none;
+  }
+  .is-plan .trip-photo-card:hover .trip-photo img {
+    transform: none;
+  }
+}

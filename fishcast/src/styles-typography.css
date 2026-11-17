@@ -1,0 +1,110 @@
+/* Approved pairing 04: expressive titles, readable conversations and data. */
+:root {
+  --font-body: 'FishCast Sans', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-heading: 'FishCast WenKai', 'Kaiti SC', 'STKaiti', 'KaiTi', serif;
+  --font-brand: 'FishCast Allura', 'FishCast WenKai', cursive;
+  --serif: var(--font-heading);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.journey-copy strong,
+.is-home .readiness-status strong,
+.trip-candidate h4 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+/* Connected script needs natural spacing; the subtitle keeps its own typeface. */
+.brand strong,
+.coastal-copy h1,
+.app-shell .footer-brand,
+.app-shell:not(.is-home) .footer-brand {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.brand strong {
+  font-size: 40px;
+  line-height: 1.05;
+}
+
+.brand strong span {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.coastal-copy h1 {
+  font-size: clamp(110px, 13vw, 190px);
+  line-height: 1.05;
+}
+
+.coastal-copy h1 span {
+  font-family: var(--font-heading);
+  font-size: clamp(25px, 2.8vw, 38px);
+  line-height: 1.65;
+  letter-spacing: 2px;
+}
+
+.app-shell .footer-brand,
+.app-shell:not(.is-home) .footer-brand {
+  font-size: 42px;
+  line-height: 1.25;
+}
+
+/* Keep operational text and numeric results out of the display fonts. */
+.agent-composer textarea,
+.count,
+.is-plan .agent-history-message,
+.is-plan .agent-message.user > p,
+.is-plan .agent-starters button > span,
+.is-home .temperature strong,
+.is-plan .trip-summary h3,
+.is-plan .trip-summary .trip-stats b,
+.is-plan .trip-windows strong,
+.is-plan .weather-answer-metrics strong,
+.about-catalog-counts dd {
+  font-family: var(--font-body);
+}
+
+.temperature strong,
+.weather-metrics,
+.trip-summary,
+.trip-stats,
+.trip-windows,
+.weather-answer-metrics,
+.weather-answer-hourly li,
+.about-catalog-counts,
+.agent-draft dd {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1200px) {
+  .coastal-copy {
+    padding-top: 240px;
+  }
+}
+
+@media (max-width: 760px) {
+  .brand strong {
+    font-size: 36px;
+  }
+
+  .coastal-copy h1 {
+    font-size: clamp(80px, 26.5vw, 120px);
+  }
+
+  .coastal-copy h1 span {
+    font-size: 25px;
+    letter-spacing: 1px;
+  }
+}

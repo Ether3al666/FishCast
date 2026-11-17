@@ -3,6 +3,7 @@ import type { Forecast, GeoLocation } from '../domain/models';
 import { OpenMeteoProvider } from '../services/weatherProvider';
 import { weatherCache } from '../services/weatherCache';
 import { createDemoForecast } from '../data/demo-fixtures';
+import { weatherErrorMessage } from '../services/weatherErrors';
 
 export function useWeather(location: GeoLocation, demo: boolean) {
   const [state, setState] = useState<{
@@ -55,12 +56,12 @@ export function useWeather(location: GeoLocation, demo: boolean) {
           weatherCache.write(forecast);
           setState({ forecast, loading: false, error: null });
         }
-      } catch {
+      } catch (error) {
         if (!controller.signal.aborted)
           setState({
             forecast: cached ? { ...cached, stale: true } : null,
             loading: false,
-            error: '天气获取失败（网络、超时或返回数据无效）。请稍后重试。',
+            error: weatherErrorMessage(error),
           });
       }
     };

@@ -57,7 +57,7 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
         renderingTimer = setTimeout(() => {
           if (cancelled) return;
           setState('error');
-          setError('底图未能完成加载，请检查网络或高德控制台额度。候选列表仍可使用。');
+          setError('地图加载超时，请重试或先使用地点列表。');
         }, 20000);
         resize = new ResizeObserver(() => instance?.resize());
         resize.observe(container.current);
@@ -65,9 +65,7 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
       .catch(() => {
         if (!cancelled) {
           setState('error');
-          setError(
-            '地图加载失败，请检查网络、Web 端 Key、域名限制与可用额度。可继续使用列表，或手动重试。',
-          );
+          setError('地图加载失败，请重试或先使用地点列表。');
         }
       });
     return () => {
@@ -109,6 +107,13 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
       return { marker, click };
     });
     instance.add(entries.map((entry) => entry.marker));
+    if (entries.length)
+      instance.setFitView(
+        entries.map((entry) => entry.marker),
+        true,
+        [100, 70, 60, 60],
+        12,
+      );
     return () => {
       entries.forEach((entry) => entry.marker.off('click', entry.click));
       if (map.current === instance) instance.remove(entries.map((entry) => entry.marker));
@@ -131,13 +136,9 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
                     ? '地图暂时不可用'
                     : '重庆地图'}
               </h2>
-              <p>
-                {state === 'error'
-                  ? error
-                  : !configuration.ready
-                    ? configuration.message
-                    : '点击后加载高德基础地图。支持缩放、拖动和候选标记。'}
-              </p>
+              {(state === 'error' || !configuration.ready) && (
+                <p>{state === 'error' ? error : !configuration.ready && configuration.message}</p>
+              )}
               {configuration.ready && state !== 'loading' && (
                 <button
                   className="button primary"
@@ -184,9 +185,7 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
             >
               <X size={16} />
             </button>
-            <span className="eyebrow">
-              {selected.isDemo ? 'DEMO / 虚构展示位置' : '候选记录 · 不代表可合法垂钓'}
-            </span>
+            {selected.isDemo && <span className="eyebrow">DEMO / 虚构展示位置</span>}
             <h3>{selected.name}</h3>
             <span
               className={'badge ' + (selected.legalStatus === 'PROHIBITED' ? 'danger' : 'muted')}
@@ -195,25 +194,21 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
             </span>
             <p>
               {selected.isDemo
-                ? '标记仅演示交互，不代表现实钓点，不提供导航。'
-                : '出发前仍需核查许可有效期、现场开放和安全条件。'}
+                ? '示例位置，不提供导航。'
+                : '园区或水域参考位置，出发前请联系场所。'}
             </p>
             <Link className="text-button" to={'/spots/' + selected.spotId}>
-              查看资料与依据 <ArrowRight size={14} />
+              场所详情 <ArrowRight size={14} />
             </Link>
           </div>
         )}
       </div>
       <div className="map-caption">
-        <p>
-          {demo
-            ? 'DEMO / 示例标记位置仅用于交互演示，与现实场所无关。'
-            : '地图只显示有来源和有效坐标的记录；暂无真实标记时不会补造钓点。'}
-        </p>
+        {demo && <p>DEMO / 示例位置，与现实场所无关。</p>}
         <div className="map-legend">
           <span>
             <i className="unknown" />
-            待核实
+            资料收录
           </span>
           <span>
             <i className="prohibited" />
@@ -221,29 +216,50 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
           </span>
           <span>
             <i className="open" />
-            已核实记录（需复核）
+            已核实记录
           </span>
         </div>
         {state === 'ready' && (
-          <div className="map-point-buttons" aria-label="选择地图标记">
-            {points.length ? (
-              points.map((point) => (
+          <details className="map-more">
+            <summary>按名称选点</summary>
+            <div className="map-point-buttons" aria-label="选择地图标记">
+              {points.length > 0 && (
                 <button
-                  key={point.spotId}
-                  onClick={() => select(point)}
-                  aria-pressed={selected?.spotId === point.spotId}
+                  onClick={() => {
+                    setSelectedId(null);
+                    map.current?.setFitView(undefined, true, [100, 70, 60, 60], 12);
+                  }}
                 >
-                  <MapPin size={13} />
-                  {point.name}
-                  {point.isDemo ? ' · DEMO' : ''}
+                  查看全部点位
                 </button>
-              ))
-            ) : (
-              <span>当前筛选下没有可显示的标记。</span>
-            )}
-          </div>
+              )}
+              {points.length ? (
+                points.map((point) => (
+                  <button
+                    key={point.spotId}
+                    onClick={() => select(point)}
+                    aria-pressed={selected?.spotId === point.spotId}
+                  >
+                    <MapPin size={13} />
+                    {point.name}
+                    {point.isDemo ? ' · DEMO' : ''}
+                  </button>
+                ))
+              ) : (
+                <span>当前筛选下没有可显示的标记。</span>
+              )}
+            </div>
+          </details>
         )}
-        <small>按需加载，不接入搜索或路线服务；账户可用额度以高德控制台为准。</small>
+        <details className="map-more">
+          <summary>地图说明</summary>
+          <p>
+            {demo
+              ? '示例标记仅用于交互演示，不代表现实钓点。'
+              : '地点来自公开资料和高德地图，标记为园区或水域参考位置，不代表允许垂钓的范围；无坐标场所仅显示在列表中。'}
+          </p>
+          {!demo && <p>主城九区按传统名称筛选，现行区名见场所详情。开放安排以场所确认为准。</p>}
+        </details>
       </div>
     </section>
   );

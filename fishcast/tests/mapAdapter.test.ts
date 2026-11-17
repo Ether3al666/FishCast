@@ -69,7 +69,7 @@ describe('地图坐标与数据隔离', () => {
     expect(points).toHaveLength(2);
     expect(points.every((point) => point.isDemo)).toBe(true);
     expect(demoSpots.every((spot) => spot.location === null)).toBe(true);
-    expect(realSpots).toEqual([]);
+    expect(buildMapPoints(realSpots, true)).toEqual([]);
   });
   it('未知与禁钓可以展示，但坐标缺失、无来源和未定义 demo 不投点', () => {
     const testSpot: Spot = {

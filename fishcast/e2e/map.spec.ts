@@ -1,4 +1,11 @@
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+const spots: { location: unknown; traditionalDistrict?: string }[] = JSON.parse(
+  readFileSync(new URL('../src/data/chongqing-spots.json', import.meta.url), 'utf8'),
+);
+const locatedCount = spots.filter((spot) => spot.location).length;
+const jiangbei = spots.filter((spot) => spot.traditionalDistrict === '江北区');
 
 // 测试 SDK 替身，仅验证页面交互与生命周期；不冒充真实高德底图，不消耗账号服务额度。
 const fakeSDK = `(() => {
@@ -20,6 +27,7 @@ const fakeSDK = `(() => {
     remove(markers) { markers.forEach(marker => marker.content.remove()); }
     resize() {}
     setZoomAndCenter(zoom, center) { this.container.setAttribute('data-zoom', zoom); this.container.setAttribute('data-center', JSON.stringify(center)); }
+    setFitView() { this.container.setAttribute('data-fit-view', 'true'); }
     destroy() { this.container.replaceChildren(); }
   }
   class Marker {
@@ -56,15 +64,28 @@ test('地图按需加载，默认重庆视图，示例标记可选且随筛选�
   );
   expect(center[0]).toBeGreaterThan(106.5);
   expect(center[1]).toBeGreaterThan(29.5);
-  await expect(page.locator('.map-pin')).toHaveCount(0);
-  await page.getByRole('button', { name: '体验示例场景' }).click();
+  await expect(page.locator('.map-pin')).toHaveCount(locatedCount);
+  await page.getByRole('button', { name: `江北区 · ${jiangbei.length}`, exact: true }).click();
+  await expect(page.locator('.map-pin')).toHaveCount(
+    jiangbei.filter((spot) => spot.location).length,
+  );
+  await expect(page.locator('.spot-card')).toHaveCount(jiangbei.length);
+  await page.getByRole('button', { name: `全重庆 · ${spots.length}`, exact: true }).click();
+  await expect(page.locator('.map-pin')).toHaveCount(locatedCount);
+  await expect(page.getByTestId('amap-container')).toHaveAttribute('data-fit-view', 'true');
+  await page.getByText('按名称选点', { exact: true }).click();
+  await page.getByRole('button', { name: '凉风村垂钓基地', exact: true }).click();
+  await expect(page.locator('.map-selection')).toContainText('园区或水域参考位置');
+  await page.getByRole('button', { name: '查看全部点位', exact: true }).click();
+  await expect(page.locator('.map-selection')).toHaveCount(0);
+  await page.locator('footer').getByRole('button', { name: '体验示例', exact: true }).click();
   await expect(page.locator('.map-pin')).toHaveCount(2);
   await page
-    .getByRole('button', { name: '示例水域 A · 待核实 · DEMO 示例位置', exact: true })
+    .getByRole('button', { name: '示例水域 A · 资料收录 · DEMO 示例位置', exact: true })
     .click();
   await expect(page.locator('.map-selection')).toContainText('虚构展示位置');
   await expect(page.locator('.map-selection')).toContainText('示例水域 A');
-  await page.getByRole('combobox').selectOption('PROHIBITED');
+  await page.getByRole('combobox', { name: '按资料类型查看' }).selectOption('PROHIBITED');
   await expect(page.locator('.map-pin')).toHaveCount(1);
   await expect(page.locator('.map-selection')).toHaveCount(0);
   await page.getByRole('button', { name: '示例水域 B · DEMO', exact: true }).click();

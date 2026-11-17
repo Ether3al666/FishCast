@@ -194,10 +194,10 @@ main {
 }
 .context-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   border-top: 1px solid #e3e7dc;
-  min-height: 58px;
+  min-height: 42px;
   gap: 14px;
   font-size: 11px;
   letter-spacing: 1px;

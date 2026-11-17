@@ -1,0 +1,376 @@
+/* The map shares the homepage's open, photographic coastal layout. */
+.map-page {
+  padding: 28px 0 72px;
+}
+.map-page .region-browser {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 40px;
+  margin: 0 0 40px;
+  padding: 16px 0 28px;
+  border-bottom: 1px solid var(--line);
+}
+.map-page .eyebrow {
+  display: block;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+.map-page .map-region-intro h2,
+.map-page .map-column-heading h2,
+.map-page .candidate-list h2 {
+  margin: 0 0 18px;
+  font-family: var(--serif);
+  font-size: 29px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+.map-page .map-region-controls {
+  min-width: 0;
+}
+.map-page .region-options {
+  gap: 9px 20px;
+  margin: 0;
+}
+.map-page .region-options button {
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.map-page .region-options button:hover,
+.map-page .region-options button[aria-pressed='true'] {
+  border-bottom-color: var(--accent);
+  background: transparent;
+  color: var(--ink);
+}
+.map-page .region-select {
+  width: min(100%, 350px);
+  margin: 18px 0 0;
+}
+.map-page .field {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+.map-page .field select,
+.map-page .field input:not([type='range']) {
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid #61716d;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.map-page .field option,
+.map-page .field optgroup {
+  color: var(--ink);
+  background: var(--ground);
+}
+.map-page .map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 44px;
+}
+.map-page .map-visual,
+.map-page .candidate-list {
+  min-width: 0;
+}
+.map-page .candidate-list,
+.map-page .fishing-map {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.map-page .map-column-heading,
+.map-page .candidate-list > .section-heading {
+  min-height: 60px;
+  margin: 0;
+}
+.map-page .candidate-list > .section-heading {
+  align-items: center;
+  gap: 16px;
+}
+.map-page .map-result-count {
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.map-page .map-stage {
+  height: 510px;
+}
+.map-page .map-cover {
+  background: #213a3b;
+}
+.map-page .map-cover > .scenery {
+  opacity: 0.2;
+}
+.map-page .map-cover > .scenery text {
+  display: none;
+}
+.map-page .map-fallback {
+  background: linear-gradient(180deg, #1f3d3f33, #182e31b3);
+}
+.map-page .map-fallback h2 {
+  margin: 22px 0 15px;
+  font-size: 32px;
+  font-weight: 400;
+}
+.map-page .map-fallback > svg {
+  color: var(--accent);
+  stroke-width: 1;
+}
+.map-page .map-fallback .button {
+  margin-top: 15px;
+  padding: 14px 22px;
+  border-radius: 0;
+  background: #d8e8df;
+  color: #233d3c;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.map-page .map-caption {
+  padding: 20px 0 0;
+}
+.map-page .map-caption p {
+  margin-bottom: 15px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.map-page .map-more {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+.map-page .map-more summary {
+  color: var(--muted);
+  cursor: pointer;
+}
+.map-page .map-more summary:hover {
+  color: var(--ink);
+}
+.map-page .map-more p {
+  margin: 14px 0 0;
+}
+.map-page .map-point-buttons {
+  max-height: 126px;
+  margin: 15px 0;
+  padding: 0 8px 8px 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #687d77 transparent;
+}
+.map-page .map-point-buttons button {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--muted);
+}
+.map-page .map-toolbar,
+.map-page .map-selection {
+  border: 0;
+  border-radius: 0;
+  background: #293638f5;
+  color: var(--ink);
+}
+.map-page .map-selection p {
+  color: var(--muted);
+}
+.map-page .map-list-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 20px;
+  margin-bottom: 8px;
+}
+.map-page .map-list-filters .field {
+  margin-bottom: 12px;
+}
+.map-page .filtered-list {
+  max-height: 670px;
+  gap: 0;
+  padding-right: 12px;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #687d77 transparent;
+}
+.map-page .map-place-row {
+  display: grid;
+  grid-template-columns: 142px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.map-page .map-place-row:first-child {
+  padding-top: 8px;
+}
+.map-page .map-place-row .trip-photo {
+  width: 100%;
+  height: 132px;
+  overflow: hidden;
+}
+.map-page .map-place-row .trip-photo img {
+  transition: transform 0.3s ease;
+}
+.map-page .map-place-row:hover .trip-photo img {
+  transform: scale(1.035);
+}
+.map-page .map-place-row .trip-photo figcaption {
+  right: 7px;
+  bottom: 7px;
+  left: 7px;
+  font-size: 8px;
+  text-align: right;
+}
+.map-page .spot-card {
+  min-width: 0;
+  gap: 8px;
+  padding: 2px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.map-page .spot-card .spot-icon {
+  display: none;
+}
+.map-page .spot-content {
+  flex-basis: 100%;
+  min-width: 0;
+}
+.map-page .spot-content .eyebrow {
+  font-size: 8px;
+  letter-spacing: 0.6px;
+}
+.map-page .spot-content h3 {
+  margin: 7px 0 9px;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.map-page .spot-content p {
+  align-items: flex-start;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.8;
+}
+.map-page .spot-content p svg {
+  margin-top: 2px;
+}
+.map-page .spot-card details {
+  margin-top: 4px;
+  padding-top: 7px;
+  border: 0;
+  font-size: 10px;
+  line-height: 1.9;
+}
+.map-page .spot-card details summary {
+  color: #c3d1c9;
+}
+@media (max-width: 1000px) {
+  .map-page .region-browser {
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 32px;
+  }
+  .map-page .map-layout {
+    gap: 28px;
+  }
+  .map-page .map-place-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 14px;
+  }
+  .map-page .spot-content h3 {
+    font-size: 18px;
+  }
+}
+@media (max-width: 850px) {
+  .map-page .map-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 46px;
+  }
+  .map-page .map-stage {
+    height: 430px;
+  }
+  .map-page .map-place-row {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .map-page .map-place-row .trip-photo {
+    height: 142px;
+  }
+  .map-page .filtered-list {
+    max-height: 660px;
+  }
+}
+@media (max-width: 540px) {
+  .map-page {
+    padding: 14px 0 36px;
+  }
+  .map-page .region-browser {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 23px;
+    margin-bottom: 37px;
+    padding: 12px 0 30px;
+  }
+  .map-page .map-region-intro h2,
+  .map-page .map-column-heading h2,
+  .map-page .candidate-list h2 {
+    font-size: 25px;
+  }
+  .map-page .region-options {
+    gap: 5px 18px;
+  }
+  .map-page .region-options button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .map-page .region-select {
+    width: 100%;
+  }
+  .map-page .map-stage {
+    height: 370px;
+  }
+  .map-page .map-list-filters {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 16px;
+  }
+  .map-page .map-result-count {
+    font-size: 9px;
+  }
+  .map-page .filtered-list {
+    max-height: 610px;
+    padding-right: 6px;
+  }
+  .map-page .map-place-row {
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px 0;
+  }
+  .map-page .map-place-row .trip-photo {
+    height: 136px;
+  }
+  .map-page .spot-content h3 {
+    margin: 5px 0 7px;
+    font-size: 17px;
+  }
+  .map-page .spot-content .eyebrow {
+    font-size: 7px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-page .map-place-row .trip-photo img {
+    transition: none;
+  }
+}

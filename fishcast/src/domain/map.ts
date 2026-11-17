@@ -17,6 +17,12 @@ export interface AMapInstance {
   on(event: 'complete', callback: () => void): void;
   off(event: 'complete', callback: () => void): void;
   setZoomAndCenter(zoom: number, center: MapPosition): void;
+  setFitView(
+    markers?: AMapMarker[],
+    immediately?: boolean,
+    avoid?: number[],
+    maxZoom?: number,
+  ): void;
   resize(): void;
   destroy(): void;
 }

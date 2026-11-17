@@ -1,0 +1,407 @@
+/* Venue photography and source notes share the homepage's open editorial layout. */
+.venue-editorial {
+  padding-top: 0;
+  padding-bottom: 64px;
+}
+.venue-editorial .venue-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 0;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+.venue-editorial .venue-water-type {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.venue-editorial .venue-gallery-main {
+  height: clamp(360px, 42vw, 540px);
+}
+.venue-editorial .venue-gallery-grid.has-thumbnails {
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 16px;
+}
+.venue-editorial .venue-gallery-thumbnails {
+  gap: 16px;
+}
+.venue-editorial .venue-photo-credit {
+  padding: 18px 0 0;
+  line-height: 1.8;
+}
+.venue-editorial .venue-heading {
+  display: block;
+  margin: 58px 0 0;
+  padding-bottom: 38px;
+  border-bottom: 1px solid var(--line);
+}
+.venue-editorial .venue-heading h1 {
+  max-width: 950px;
+  margin: 0 0 22px;
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 1px;
+  overflow-wrap: anywhere;
+}
+.venue-editorial .venue-heading p {
+  line-height: 1.9;
+  align-items: start;
+}
+.venue-editorial .venue-heading p svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.venue-editorial .venue-body {
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 1fr);
+  gap: 76px;
+  margin-top: 48px;
+}
+.venue-editorial .venue-intro h2,
+.venue-editorial .venue-status h2 {
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+.venue-editorial .venue-intro > p {
+  line-height: 2.15;
+}
+.venue-editorial .venue-location {
+  margin: 34px 0 10px;
+  padding: 28px 0;
+}
+.venue-editorial .venue-disclosures summary {
+  padding: 26px 0;
+}
+.venue-editorial .venue-visit {
+  padding: 0 0 0 32px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+}
+.venue-editorial .venue-status {
+  align-items: start;
+  padding-bottom: 26px;
+}
+.venue-editorial .venue-status > svg {
+  margin-top: 7px;
+}
+.venue-editorial .venue-status p {
+  margin-top: 12px;
+  line-height: 1.9;
+}
+.venue-editorial .venue-permission-note {
+  line-height: 2;
+  margin: 20px 0 28px;
+}
+.venue-editorial .venue-visit > .button {
+  padding: 15px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--accent);
+}
+.venue-editorial .venue-visit > .button:hover {
+  background: transparent;
+  color: var(--ink);
+}
+.about-editorial {
+  padding-bottom: 50px;
+}
+.about-introduction {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 90px;
+  align-items: start;
+  margin: 90px 0 94px;
+}
+.about-opening {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(27px, 3vw, 40px);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+.about-introduction-copy > p {
+  margin: 0;
+  max-width: 450px;
+  font-size: 13px;
+  line-height: 2.2;
+}
+.about-catalog-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+  padding-top: 24px;
+  margin: 26px 0 0;
+  border-top: 1px solid var(--line);
+}
+.about-catalog-counts > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+}
+.about-catalog-counts dt {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.about-catalog-counts dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--accent);
+}
+.about-editorial-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 85px;
+  align-items: start;
+}
+.about-editorial h2 {
+  margin: 0 0 30px;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+.about-source-list {
+  margin: 0;
+}
+.about-source-list > div {
+  padding: 25px 0;
+  border-top: 1px solid var(--line);
+}
+.about-source-list dt {
+  margin-bottom: 13px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.about-source-list dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2.1;
+  overflow-wrap: anywhere;
+}
+.about-editorial a {
+  color: var(--accent);
+}
+.about-editorial a:hover {
+  color: var(--ink);
+}
+.about-editorial a svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.about-water-image {
+  margin: 0 0 44px;
+}
+.about-water-image img {
+  display: block;
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  object-position: 52% 40%;
+}
+.about-water-image figcaption {
+  margin-top: 12px;
+  text-align: right;
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.about-privacy-section > p {
+  margin: 0 0 23px;
+  font-size: 13px;
+  line-height: 2.1;
+  overflow-wrap: anywhere;
+}
+.about-editorial .about-demo-button {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  margin: 30px 0 17px;
+  padding: 17px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  white-space: normal;
+  text-align: left;
+}
+.about-demo-button svg {
+  flex-shrink: 0;
+}
+.about-privacy-section .about-demo-button + p {
+  font-size: 11px;
+}
+.about-reference-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  margin-top: 70px;
+  padding: 38px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.about-reference-section h3 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 400;
+}
+.about-reference-links {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+.about-reference-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.8;
+  width: fit-content;
+  max-width: 100%;
+}
+.about-reference-links .fine-print {
+  margin: 12px 0 0;
+  font-size: 11px;
+  line-height: 1.9;
+}
+@media (max-width: 1000px) {
+  .venue-editorial .venue-body {
+    gap: 38px;
+  }
+  .venue-editorial .venue-visit {
+    padding-left: 26px;
+  }
+  .venue-editorial .venue-gallery-grid.has-thumbnails {
+    grid-template-columns: minmax(0, 1fr) 150px;
+  }
+  .about-introduction,
+  .about-editorial-columns {
+    gap: 45px;
+  }
+  .about-water-image img {
+    height: 280px;
+  }
+}
+@media (max-width: 680px) {
+  .venue-editorial {
+    padding-bottom: 25px;
+  }
+  .venue-editorial .venue-navigation {
+    padding: 17px 0;
+    margin-bottom: 22px;
+  }
+  .venue-editorial .venue-back,
+  .venue-editorial .venue-water-type {
+    font-size: 11px;
+  }
+  .venue-editorial .venue-gallery-main {
+    height: 310px;
+  }
+  .venue-editorial .venue-gallery-grid.has-thumbnails {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .venue-editorial .venue-gallery-thumbnails {
+    gap: 8px;
+  }
+  .venue-editorial .venue-photo-credit {
+    padding-top: 14px;
+  }
+  .venue-editorial .venue-heading {
+    margin-top: 35px;
+    padding-bottom: 28px;
+  }
+  .venue-editorial .venue-heading h1 {
+    font-size: 31px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    margin-bottom: 16px;
+  }
+  .venue-editorial .venue-heading p {
+    font-size: 12px;
+  }
+  .venue-editorial .venue-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 42px;
+    margin-top: 34px;
+  }
+  .venue-editorial .venue-visit {
+    grid-row: auto;
+    padding: 30px 0 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+  }
+  .venue-editorial .venue-intro h2,
+  .venue-editorial .venue-status h2 {
+    font-size: 26px;
+  }
+  .venue-editorial .venue-location {
+    margin-top: 24px;
+  }
+  .about-introduction,
+  .about-editorial-columns,
+  .about-reference-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .about-introduction {
+    margin: 55px 0 62px;
+    gap: 26px;
+  }
+  .about-opening {
+    font-size: 28px;
+    letter-spacing: 0;
+  }
+  .about-catalog-counts {
+    gap: 20px;
+  }
+  .about-catalog-counts dd {
+    font-size: 38px;
+  }
+  .about-editorial-columns {
+    gap: 42px;
+  }
+  .about-editorial h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+  .about-source-list > div {
+    padding: 22px 0;
+  }
+  .about-water-image {
+    margin-bottom: 35px;
+  }
+  .about-water-image img {
+    height: 290px;
+  }
+  .about-reference-section {
+    margin-top: 38px;
+    padding: 28px 0;
+    gap: 26px;
+  }
+  .about-reference-section h3 {
+    font-size: 25px;
+  }
+  .about-reference-links a {
+    gap: 8px;
+    font-size: 12px;
+  }
+}

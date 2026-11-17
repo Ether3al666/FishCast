@@ -46,6 +46,30 @@ export function parseForecast(raw: unknown, location: GeoLocation): Forecast {
     isDemo: false,
   };
 }
+
+function retryable(error: unknown) {
+  return (
+    (error instanceof TypeError &&
+      !/AbortSignal|AbortController|is not a function/.test(error.message)) ||
+    (error instanceof Error && /^天气服务返回 HTTP 5\d{2}$/.test(error.message))
+  );
+}
+
+function waitBeforeRetry(signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    signal.throwIfAborted();
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(signal.reason);
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener('abort', onAbort);
+      resolve();
+    }, 800);
+    signal.addEventListener('abort', onAbort, { once: true });
+  });
+}
+
 export class OpenMeteoProvider implements WeatherProvider {
   async getHourlyForecast(
     input: GeoLocation & { timezone: 'Asia/Shanghai' },
@@ -56,17 +80,35 @@ export class OpenMeteoProvider implements WeatherProvider {
       latitude: String(location.lat),
       longitude: String(location.lon),
       timezone: input.timezone,
-      forecast_days: '3',
+      forecast_days: '7',
       wind_speed_unit: 'kmh',
       temperature_unit: 'celsius',
       precipitation_unit: 'mm',
       hourly:
         'temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,wind_direction_10m,pressure_msl,weather_code',
     });
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
-      signal: AbortSignal.any([AbortSignal.timeout(12000), ...(signal ? [signal] : [])]),
-    });
-    if (!response.ok) throw new Error(`天气服务返回 HTTP ${response.status}`);
-    return parseForecast(await response.json(), location);
+    // Both attempts and the retry delay share the user's 30-second total limit.
+    const requestSignal = AbortSignal.any([
+      AbortSignal.timeout(30000),
+      ...(signal ? [signal] : []),
+    ]);
+    let retried = false;
+    for (;;) {
+      requestSignal.throwIfAborted();
+      try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
+          signal: requestSignal,
+        });
+        if (!response.ok) throw new Error(`天气服务返回 HTTP ${response.status}`);
+        const forecast = parseForecast(await response.json(), location);
+        requestSignal.throwIfAborted();
+        return forecast;
+      } catch (error) {
+        requestSignal.throwIfAborted();
+        if (retried || !retryable(error)) throw error;
+        retried = true;
+        await waitBeforeRetry(requestSignal);
+      }
+    }
   }
 }

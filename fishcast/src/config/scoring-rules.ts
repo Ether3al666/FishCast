@@ -1,5 +1,5 @@
 export const RULES = {
-  version: 'p0-gates-0.1',
+  version: 'rules-candidates-0.2',
   evidenceMaxAgeDays: 30,
   // 产品保守中止阈值，非官方预警阈值或鱼类生物学定律。
   stopWindKmh: 39,
