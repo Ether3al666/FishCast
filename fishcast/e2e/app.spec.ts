@@ -109,7 +109,7 @@ test('规划提交无可靠资料时返回空结果，修改条件清除旧计�
 test('离线明确提示，深链接刷新不 404', async ({ page, context }) => {
   await page.goto('/#/about');
   await page.reload();
-  await expect(page.getByRole('heading', { name: '每一条信息，都有来处' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '关于 FishCast' })).toBeVisible();
   await context.setOffline(true);
   await expect(page.locator('.offline-banner')).toBeVisible();
   await context.setOffline(false);

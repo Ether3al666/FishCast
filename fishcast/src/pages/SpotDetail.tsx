@@ -101,7 +101,7 @@ export function SpotDetail({ spots }: { spots: Spot[] }) {
                   href={spot.locationEvidence.url}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="在高德查看参考位置"
+                  aria-label="在高德查看场所位置"
                 >
                   查看位置 <ArrowUpRight size={16} aria-hidden="true" />
                 </a>
@@ -126,7 +126,7 @@ export function SpotDetail({ spots }: { spots: Spot[] }) {
                 )}
                 {spot.location && (
                   <>
-                    <dt>参考坐标 · WGS84</dt>
+                    <dt>场所坐标 · WGS84</dt>
                     <dd>
                       {spot.location.lat.toFixed(6)}, {spot.location.lon.toFixed(6)}
                       。仅用于识别所在区域，不是钓位导航。
@@ -152,7 +152,7 @@ export function SpotDetail({ spots }: { spots: Spot[] }) {
                 <dd>
                   {spot.verifiedAt
                     ? spot.verifiedAt.slice(0, 10)
-                    : '暂无记录；资料查询日期不等于许可核实日期。'}
+                    : '待确认'}
                 </dd>
               </dl>
             </details>
@@ -233,7 +233,7 @@ export function SpotDetail({ spots }: { spots: Spot[] }) {
           <p className="venue-permission-note">
             {spot.legalStatus === 'VERIFIED_OPEN'
               ? '许可记录不代表当前现场安全，仍需核查天气、预警与适用时段。'
-              : '当前没有有效开放许可依据，暂不进入正式推荐。'}
+              : '开放许可待确认，仅作候选地点。'}
           </p>
           <Link className="button secondary" to="/map">
             看看其他地点 <ArrowUpRight size={16} aria-hidden="true" />

@@ -1,15 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  ArrowUp,
-  ArrowUpRight,
-  Waves,
-  Plus,
-  SlidersHorizontal,
-  CloudSun,
-  MapPin,
-  ShieldCheck,
-} from 'lucide-react';
+import { ArrowUp, ArrowUpRight, Waves, Plus, SlidersHorizontal, CloudSun, MapPin } from 'lucide-react';
 import type { Forecast, GeoLocation, PlanRequest, Spot } from '../../domain/models';
 import {
   createTripRequest,
@@ -144,7 +134,7 @@ export function AgentPlanner({
       delete nextDraft.start;
       delete nextDraft.end;
     }
-    const referenceOnly = /(?:当前|现在的|出发)?参考位置|当前位置/.test(text);
+    const referenceOnly = /(?:当前|现在的|出发)?参考位置|当前位置|(?:查|看)出发地天气/.test(text);
     if (referenceOnly || (/附近/.test(text) && !parsed.recognized.includes('区域')))
       delete nextDraft.searchArea;
     let spot = namedSpot ?? selectedSpot;
@@ -351,7 +341,7 @@ export function AgentPlanner({
         <div className="agent-draft">
           <h2>出行草稿</h2>
           <dl>
-            <dt>{selectedSpot ? '所选场所' : '参考位置'}</dt>
+            <dt>{selectedSpot ? '所选场所' : '出发地'}</dt>
             <dd>
               <MapPin size={14} />
               {selectedSpot?.name ?? locationLabel}
@@ -411,7 +401,7 @@ export function AgentPlanner({
                   : forecast?.stale
                     ? '非实时天气缓存'
                     : forecast
-                      ? '参考位置天气已更新'
+                      ? '天气已更新'
                       : '天气暂不可用'}
             </strong>
           </div>
@@ -431,10 +421,6 @@ export function AgentPlanner({
             onSubmit={exactSubmit}
           />
         </details>
-        <Link className="agent-source" to="/about">
-          <ShieldCheck size={15} />
-          数据与依据 <ArrowUpRight size={14} />
-        </Link>
       </aside>
     </div>
   );

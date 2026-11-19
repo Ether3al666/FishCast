@@ -186,8 +186,7 @@ main {
   left: max(40px, calc((100% - 1080px) / 2));
   right: max(40px, calc((100% - 1080px) / 2));
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: flex-end;
   font-size: 10px;
   letter-spacing: 2px;
   color: #c2cfcb;

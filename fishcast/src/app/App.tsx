@@ -1,16 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Compass,
-  Fish,
-  Map,
-  MapPin,
-  Navigation,
-  ShieldCheck,
-  Leaf,
-} from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Compass, Fish, Map, Navigation } from 'lucide-react';
 import type { GeoLocation } from '../domain/models';
 import { HomeIntro } from '../components/HomeIntro';
 import { WeatherPanel } from '../components/WeatherPanel';
@@ -28,17 +18,17 @@ import { AboutPage } from '../pages/AboutPage';
 
 // 城市级天气参考中心，非钓点坐标、非用户定位。来源见 DATA_SOURCES。
 const cityLocation: GeoLocation = { lat: 29.56, lon: 106.55, crs: 'WGS84' };
+const cityLabel = '重庆主城区';
 const navigation = [
   { to: '/', label: '探索首页', Icon: Compass },
   { to: '/map', label: '地图找点', Icon: Map },
   { to: '/plan', label: '出钓规划', Icon: Navigation },
-  { to: '/about', label: '数据与依据', Icon: ShieldCheck },
 ];
 
 export default function App() {
   const [demo, setDemo] = useState(false);
   const [location, setLocation] = useState(cityLocation);
-  const [locationLabel, setLocationLabel] = useState('重庆 · 主城区参考中心');
+  const [locationLabel, setLocationLabel] = useState(cityLabel);
   const [locating, setLocating] = useState(false);
   const [locationMessage, setLocationMessage] = useState('');
   const [day, setDay] = useState(0);
@@ -56,12 +46,12 @@ export default function App() {
   }, [route.pathname]);
   const resetLocation = () => {
     setLocation(cityLocation);
-    setLocationLabel('重庆 · 主城区参考中心');
-    setLocationMessage('已切换为城市参考坐标，不代表你的真实位置。');
+    setLocationLabel(cityLabel);
+    setLocationMessage('天气已切换至重庆主城区。');
   };
   const locate = () => {
     if (!navigator.geolocation) {
-      setLocationMessage('浏览器不支持定位，请使用重庆参考中心。');
+      setLocationMessage('浏览器不支持定位，请使用重庆主城区。');
       return;
     }
     setLocating(true);
@@ -73,13 +63,13 @@ export default function App() {
           lon: position.coords.longitude,
           crs: 'WGS84',
         });
-        setLocationLabel('我的位置 · 仅用于天气');
+        setLocationLabel('我的位置');
         setLocating(false);
-        setLocationMessage('位置仅保存在当前页面内存，并发送给天气服务；不写入本地存储。');
+        setLocationMessage('已切换至我的位置，定位仅用于查询天气。');
       },
       () => {
         setLocating(false);
-        setLocationMessage('定位未获授权或获取失败，可继续使用重庆参考中心。');
+        setLocationMessage('定位未获授权或获取失败，可继续使用重庆主城区。');
       },
       { timeout: 10000, maximumAge: 300000 },
     );
@@ -115,14 +105,10 @@ export default function App() {
             </NavLink>
           ))}
         </nav>
-        <span className="pilot">
-          <i />
-          重庆试点
-        </span>
       </header>
       {demo && (
         <div className="demo-banner" role="status">
-          DEMO / 示例数据模式 · 虚构测试场景与示例天气，不用于真实出钓决策{' '}
+          DEMO / 示例模式{' '}
           <button
             onClick={() => {
               setDemo(false);
@@ -134,86 +120,21 @@ export default function App() {
       )}
       {!weather.online && (
         <div className="offline-banner" role="status">
-          当前离线 · 应用页面可操作，真实天气暂不可用
+          当前离线，天气暂不可用
         </div>
       )}
       <main id="main" tabIndex={-1} key={route.pathname}>
-        <div className="context-bar">
-          <button onClick={resetLocation}>
-            <MapPin size={14} />
-            {locationLabel}
-            <span>切换</span>
-          </button>
-        </div>
         {route.pathname === '/' && (
           <>
             <HomeIntro />
-            <div className="safety-note">
-              <ShieldCheck size={18} />
-              <p>
-                <b>先核实，再出发。</b>{' '}
-                当前暂无已核实开放钓点；未接入权威预警和水位数据，天气良好也不代表安全。
-              </p>
-              <Link to="/about">
-                了解依据 <ArrowRight size={14} />
-              </Link>
-            </div>
-            <div className="dashboard-grid">
+            <div className="home-weather">
               <WeatherPanel {...weather} day={day} setDay={setDay} />
-              <section className="readiness panel">
-                <h2>这次出发，准备好了吗？</h2>
-                <div className="readiness-status">
-                  <span className="ring">
-                    <ShieldCheck size={25} />
-                  </span>
-                  <div>
-                    <strong>等待钓点核实</strong>
-                    <p>资料不足，暂不生成推荐分数</p>
-                  </div>
-                </div>
-                <ul className="checklist">
-                  <li>
-                    <span>
-                      <i
-                        className={
-                          weather.forecast && !weather.forecast.stale && !demo ? 'green' : ''
-                        }
-                      />
-                      天气数据
-                    </span>
-                    <b>
-                      {demo
-                        ? '示例数据'
-                        : weather.forecast && !weather.forecast.stale
-                          ? '已获取预报'
-                          : '等待有效数据'}
-                    </b>
-                  </li>
-                  <li>
-                    <span>
-                      <i />
-                      钓点许可
-                    </span>
-                    <b>尚无核实开放点</b>
-                  </li>
-                  <li>
-                    <span>
-                      <i />
-                      官方预警 / 水位
-                    </span>
-                    <b>暂未接入</b>
-                  </li>
-                </ul>
-                <Link className="readiness-link" to="/about">
-                  查看数据完整度 <ArrowUpRight size={16} />
-                </Link>
-              </section>
             </div>
             <section className="spot-section">
               <div className="section-heading">
                 <div>
                   <h2>
-                    下一站，去哪里？ <span className="count">{spots.length} 个候选</span>
+                    重庆水域 <span className="count">{spots.length} 个候选</span>
                   </h2>
                 </div>
                 <Link className="text-button" to="/map">
@@ -233,16 +154,6 @@ export default function App() {
                   }}
                 />
               )}
-            </section>
-            <section className="bottom-strip">
-              <Leaf size={25} strokeWidth={1.4} />
-              <div>
-                <h3>把好风景，也留给下一次。</h3>
-                <p>遵守现场规定，带走垃圾；出发前向管理方了解开放安排。</p>
-              </div>
-              <Link to="/about">
-                出钓须知 <ArrowUpRight size={15} />
-              </Link>
             </section>
           </>
         )}
@@ -279,10 +190,7 @@ export default function App() {
               </>
             }
           />
-          <Route
-            path="/about"
-            element={<AboutPage demo={demo} onToggleDemo={() => setDemo((v) => !v)} />}
-          />
+          <Route path="/about" element={<AboutPage />} />
           <Route
             path="*"
             element={
@@ -301,28 +209,30 @@ export default function App() {
             }
           />
         </Routes>
-        {locationMessage && (
-          <p className="location-message" role="status">
-            {locationMessage}
-          </p>
+        {(pageKind === 'home' || pageKind === 'plan') && (
+          <>
+            {locationMessage && (
+              <p className="location-message" role="status">
+                {locationMessage}
+              </p>
+            )}
+            <div className="location-tools">
+              <span>天气位置：{locationLabel}</span>
+              <button onClick={locate} disabled={locating}>
+                <Navigation size={13} />
+                {locating ? '正在定位…' : '使用我的位置'}
+              </button>
+              <button onClick={resetLocation}>重庆主城区</button>
+            </div>
+          </>
         )}
-        <div className="location-tools">
-          <span>天气位置：{locationLabel}</span>
-          <button onClick={locate} disabled={locating}>
-            <Navigation size={13} />
-            {locating ? '正在定位…' : '使用我的位置'}
-          </button>
-          <button onClick={resetLocation}>重庆参考中心</button>
-        </div>
       </main>
       <footer>
         <Link className="footer-brand" to="/">
           <Fish size={19} />
           FishCast
         </Link>
-        <span>重庆试点 · 有依据的出钓决定</span>
         <div>
-          <span className="mode-label">{demo ? 'DEMO / 示例模式' : '真实数据模式'}</span>
           <button
             onClick={() => {
               setDemo((v) => !v);
@@ -331,7 +241,7 @@ export default function App() {
             {demo ? '退出示例' : '体验示例'}
           </button>
           <Link to="/about">
-            数据与免责声明 <ArrowUpRight size={12} />
+            关于 FishCast <ArrowUpRight size={12} />
           </Link>
         </div>
       </footer>

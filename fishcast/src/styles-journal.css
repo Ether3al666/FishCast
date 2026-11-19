@@ -1,21 +1,7 @@
 /* The lower homepage follows the same photographic editorial rhythm as its cover. */
-.is-home #main > .safety-note {
-  max-width: 850px;
+.is-home .home-weather {
+  width: min(100%, 850px);
   margin: 0 auto 70px;
-  padding: 24px 0;
-  border: 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  gap: 20px;
-}
-.is-home #main > .safety-note p {
-  line-height: 2;
-}
-.is-home .dashboard-grid {
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 60px;
-  align-items: stretch;
-  margin-bottom: 100px;
 }
 .is-home .weather-panel {
   border: 0;
@@ -422,10 +408,6 @@
   font-size: 11px;
 }
 @media (max-width: 1000px) {
-  .is-home .dashboard-grid {
-    gap: 30px;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  }
   .is-home .weather-panel h2 {
     font-size: 27px;
   }
@@ -443,19 +425,8 @@
   }
 }
 @media (max-width: 760px) {
-  .is-home #main > .safety-note {
-    margin-bottom: 35px;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .is-home #main > .safety-note p {
-    font-size: 11px;
-  }
-  .is-home .dashboard-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
-    margin-bottom: 65px;
+  .is-home .home-weather {
+    margin-bottom: 45px;
   }
   .is-home .weather-panel {
     padding: 10px 0;

@@ -128,7 +128,7 @@ export function MapPage({
                   filtered.map((spot) => (
                     <div className="map-place-row" key={spot.id} data-legal={spot.legalStatus}>
                       <SpotPhoto spot={spot} />
-                      <SpotCard spot={spot} compact />
+                      <SpotCard spot={spot} />
                     </div>
                   ))
                 ) : (

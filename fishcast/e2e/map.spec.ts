@@ -75,7 +75,7 @@ test('地图按需加载，默认重庆视图，示例标记可选且随筛选�
   await expect(page.getByTestId('amap-container')).toHaveAttribute('data-fit-view', 'true');
   await page.getByText('按名称选点', { exact: true }).click();
   await page.getByRole('button', { name: '凉风村垂钓基地', exact: true }).click();
-  await expect(page.locator('.map-selection')).toContainText('园区或水域参考位置');
+  await expect(page.locator('.map-selection')).toContainText('园区或水域位置');
   await page.getByRole('button', { name: '查看全部点位', exact: true }).click();
   await expect(page.locator('.map-selection')).toHaveCount(0);
   await page.locator('footer').getByRole('button', { name: '体验示例', exact: true }).click();

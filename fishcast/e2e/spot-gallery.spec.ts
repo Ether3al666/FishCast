@@ -81,5 +81,5 @@ test('单张高德图和无图地点可直接访问，换地点不会沿用旧�
     'alt',
     '水景示意，非该场所实景',
   );
-  await expect(page.getByRole('link', { name: '在高德查看参考位置' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: '在高德查看场所位置' })).toHaveCount(0);
 });

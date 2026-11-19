@@ -54,29 +54,34 @@
   align-items: center;
 }
 .map-pin {
-  width: 32px;
-  height: 38px;
+  --pin-color: #9b813b;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
-  border-radius: 50% 50% 50% 5px;
+  padding: 0;
+  border-radius: 50%;
+}
+.map-pin::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
   border: 2px solid #fff;
-  color: #fff;
-  background: #9b813b;
-  font: 700 20px sans-serif;
-  box-shadow: 0 3px 9px #233c3350;
+  border-radius: 50%;
+  background: var(--pin-color);
+  box-shadow: 0 1px 4px #233c3366;
+  pointer-events: none;
 }
 .map-pin-prohibited {
-  background: #ac5d43;
-}
-.map-pin-conditional {
-  background: #9b813b;
+  --pin-color: #ac5d43;
 }
 .map-pin-verified_open {
-  background: #316449;
+  --pin-color: #316449;
 }
-.map-pin:hover {
-  color: white;
-  transform: translateY(-3px);
+.map-pin:hover::before,
+.map-pin:focus-visible::before {
+  transform: scale(1.15);
 }
 .map-selection {
   position: absolute;
@@ -143,7 +148,7 @@
   width: 7px;
   display: inline-block;
   border-radius: 50%;
-  background: #aa904a;
+  background: #9b813b;
 }
 .map-legend i.prohibited {
   background: #ac5d43;

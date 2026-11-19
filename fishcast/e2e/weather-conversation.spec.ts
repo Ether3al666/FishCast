@@ -204,9 +204,9 @@ test('区县天气先选具体位置，切换区县不会沿用旧地点，问�
   await send(page, '那酉阳呢');
   await expect(reply).toContainText('想查酉阳土家族苗族自治县哪里的天气');
   await expect(reply.getByRole('group')).toHaveCount(0);
-  await reply.getByRole('button', { name: '查看参考位置天气' }).click();
+  await reply.getByRole('button', { name: '查看出发地天气' }).click();
   await expectRain(reply, '1.2');
-  await expect(reply).toContainText('重庆 · 主城区参考中心');
+  await expect(reply).toContainText('重庆主城区');
   await send(page, '看全天');
   await expectRain(reply, '10.2');
 });

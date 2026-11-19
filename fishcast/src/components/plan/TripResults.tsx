@@ -186,7 +186,7 @@ export function TripResults({
                 `另有 ${result.withoutLocation} 处未提供坐标，仅在全部列表展示。`}
             </p>
             <p>
-              按钓法资料或名称线索、直线距离排列。没有有效开放许可依据的场所不作为正式出钓推荐。高德场所图拍摄时间未注明，不代表当前现场；无图时使用明确标注的水景示意图。
+              按钓法线索和直线距离排列。开放许可待确认的地点仅作候选。
             </p>
             {request.searchArea && isTraditionalArea(request.searchArea) && (
               <p>传统九区口径，现行区名见资料。渝中区暂未收录可核实的经营性钓场。</p>
@@ -266,7 +266,6 @@ export function TripResults({
       )}
       <details className="trip-reference">
         <summary>出发地天气</summary>
-        <p>出发参考位置预报，非所选场所天气。</p>
         <p>{summarizeWeather(forecast, request)}</p>
       </details>
     </div>

@@ -24,7 +24,6 @@ export function PageTitle({
         <span className="page-cover-rule" aria-hidden="true" />
         {text && <p>{text}</p>}
       </div>
-      <span className="page-cover-caption">水岸影像 · 氛围展示</span>
     </header>
   );
 }

@@ -43,9 +43,9 @@ export function WeatherConversation(props: Props) {
     return (
       <section className="weather-answer" aria-label="天气回答">
         <h3>{props.spot.name}</h3>
-        <p>这个场所还没有参考坐标，暂时无法查询当地天气。</p>
-        <button className="text-button" onClick={() => props.onAsk('查参考位置的天气')}>
-          查看参考位置天气
+        <p>这个场所暂无地图位置，暂时无法查询当地天气。</p>
+        <button className="text-button" onClick={() => props.onAsk('查出发地天气')}>
+          查看出发地天气
         </button>
       </section>
     );
@@ -76,8 +76,8 @@ export function WeatherConversation(props: Props) {
             ))}
           </select>
         </label>
-        <button className="text-button" onClick={() => props.onAsk('查参考位置的天气')}>
-          查看参考位置天气
+        <button className="text-button" onClick={() => props.onAsk('查出发地天气')}>
+          查看出发地天气
         </button>
       </section>
     );

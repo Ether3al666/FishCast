@@ -150,7 +150,7 @@ export function summarizeWeather(forecast: Forecast | null, request: PlanRequest
     forecast.location.lon !== request.location.lon
   )
     return '天气位置与当前参考位置不匹配，请刷新后重试。';
-  const prefix = forecast.isDemo ? 'DEMO / 示例天气，仅演示：' : '参考位置预报：';
+  const prefix = forecast.isDemo ? 'DEMO / 示例天气，仅演示：' : '出发地预报：';
   const start = Date.parse(request.startAt),
     end = Date.parse(request.endAt);
   const hours = forecast.hours.filter(

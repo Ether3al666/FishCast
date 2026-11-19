@@ -87,8 +87,6 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
       const content = document.createElement('button');
       content.type = 'button';
       content.className = 'map-pin map-pin-' + point.legalStatus.toLowerCase();
-      content.textContent =
-        point.legalStatus === 'PROHIBITED' ? '×' : point.legalStatus === 'UNKNOWN' ? '?' : '•';
       content.setAttribute(
         'aria-label',
         point.name +
@@ -99,7 +97,7 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
       const marker = new api.Marker({
         position: point.position,
         content,
-        anchor: 'bottom-center',
+        anchor: 'center',
         title: point.name,
       });
       const click = () => select(point);
@@ -195,7 +193,7 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
             <p>
               {selected.isDemo
                 ? '示例位置，不提供导航。'
-                : '园区或水域参考位置，出发前请联系场所。'}
+                : '园区或水域位置。开放安排请向场所确认。'}
             </p>
             <Link className="text-button" to={'/spots/' + selected.spotId}>
               场所详情 <ArrowRight size={14} />
@@ -256,9 +254,8 @@ export function FishingSpotMap({ spots, demo }: { spots: Spot[]; demo: boolean }
           <p>
             {demo
               ? '示例标记仅用于交互演示，不代表现实钓点。'
-              : '地点来自公开资料和高德地图，标记为园区或水域参考位置，不代表允许垂钓的范围；无坐标场所仅显示在列表中。'}
+              : '地图标记显示园区或水域位置。暂无坐标的地点可在列表查看。'}
           </p>
-          {!demo && <p>主城九区按传统名称筛选，现行区名见场所详情。开放安排以场所确认为准。</p>}
         </details>
       </div>
     </section>
